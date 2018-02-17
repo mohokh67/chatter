@@ -13,9 +13,14 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket)=>{
     console.log('User connected');
-    socket.emit('message', { MoHo: 'hey how are you?' });
-    socket.on('another event', (data) => {
-        console.log(data);
+    socket.on('message', (message) => {
+        console.log(`message ${message}`);
+        io.emit('message', message);
+    });
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+        io.emit('message', 'user disconnected')
+        
     })
 })
 
