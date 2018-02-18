@@ -45,20 +45,27 @@ app.get("/", (req, res) => {
   //res.sendFile(__dirname + '/public/index.html');
 });
 
+// All messages
 app.get("/messages", (req, res) => {
   Message.find({}, (error, messages) => {
     res.send(messages);
   });
 });
 
+// All messages belong to a room
 app.get("/messages/:roomName", async (req, res) => {
     let roomName = await req.params.roomName;
     let chatRoom = await ChatRoom.findOne({name: roomName});
-    Message.find({room_id: 1}, (error, messages) => {
+    io.emit('send_room_id', chatRoom._id);
+    console.log('we are here');
+    Message.find({room_id: chatRoom._id}, (error, messages) => {
       res.send(messages);
+      //res.sendFile(__dirname + '/public/messages.html');
+      //app.use(express.static(__dirname + "/public/"));
     });
   });
 
+  // All rooms
   app.get("/rooms", (req, res) => {
     ChatRoom.find({}, (error, rooms) => {
       res.send(rooms);

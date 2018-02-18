@@ -8,16 +8,22 @@ $(() => {
 $("form").submit(() => {
     var $senderMessage = $("#message");
     var $sender = $("#sender");
+    
     var message = {
         name: $sender.val(),
         message: $senderMessage.val(),
-        room_id: "1"
+        room_id: '5a89f62cd0d06f0edf444e9f'
     };
     socket.emit('message', message); // Emiting to server
     $senderMessage.val('');
     $sender.hide();
     return false;
 });
+
+socket.on('send_room_id', (roomID) => {
+    log(roomID)
+    let roomID = roomID;
+})
 
 socket.on('updateClients', (message) => {
     addMessage(message);
@@ -28,11 +34,6 @@ socket.on('connect', () => {
   socket.emit('systemLog', "A new user connected"); // Emiting to server
 });
 
-function getChatRomMessages() {
-    $.get("/messages/React", messages => {
-        messages.forEach(addMessage);
-    });
-}
 
 function getChatRoms() {
     $.get("/rooms", messages => {
