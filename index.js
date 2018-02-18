@@ -45,16 +45,16 @@ app.get("/messages", (req, res) => {
 });
 
 // tech namespace
-//const tech = io.of("/tech");
+const tech = io.of("/tech");
 
-io.on("connection", (socket) => {
+tech.on("connection", (socket) => {
   
     try {
     socket.on("message", async (message) => {
       var thisMessage = new Message(message);
       var sevedMessage = await thisMessage.save();
       console.log("Messaged saved to DB");
-      io.emit("message", message);
+      tech.emit("message", message);
     });
 
     socket.on("disconnect", () => {
