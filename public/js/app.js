@@ -1,33 +1,31 @@
-const socket = io('/tech');
+const socket = io();
 
 $(() => {
-  getMessages();
-  $("html, body").animate({ scrollTop: $(document).height() }, 500);
+    getMessages();
 });
+
 $("form").submit(() => {
-  var senderMessage = $("#message");
-  var sender = $("#sender");
+  var $senderMessage = $("#message");
+  var $sender = $("#sender");
   var message = {
-    name: sender.val(),
-    message: senderMessage.val(),
+    name: $sender.val(),
+    message: $senderMessage.val(),
     room_id: "1"
   };
-  socket.emit("message", message);
-  addMessage(message);
-  senderMessage.val("");
-  sender.hide();
+  socket.emit('message', message);
+  $senderMessage.val('');
+  $sender.hide();
   return false;
 });
 
-socket.on("connect", () => {
-  //emiting to everyone
-  socket.emit("systemLog", "user connected");
+socket.on('message', (message) => {
+    addMessage(message);
 });
 
-// socket.on('message', (data) => {
-//     console.log(data);
-//     socket.emit('another event', { Habib: 'I am good thank you.' });
-// })
+socket.on('connect', () => {
+  //emiting to everyone
+  socket.emit('systemLog', "A new user connected");
+});
 
 function getMessages() {
   $.get("/messages", messages => {
@@ -43,4 +41,8 @@ function addMessage(message) {
     message.message +
     "</span>";
   $("#messages").append($("<li>").html(thisMeesage));
+}
+
+function log(message){
+    console.log(message);
 }

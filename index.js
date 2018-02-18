@@ -45,23 +45,26 @@ app.get("/messages", (req, res) => {
 });
 
 // tech namespace
-const tech = io.of("/tech");
+//const tech = io.of("/tech");
 
-tech.on("connection", socket => {
-  try {
-    socket.on("message", async message => {
+io.on("connection", (socket) => {
+  
+    try {
+    socket.on("message", async (message) => {
       var thisMessage = new Message(message);
       var sevedMessage = await thisMessage.save();
       console.log("Messaged saved to DB");
-    });
-
-    socket.on("systemLog", message => {
-      console.log(`message ${message}`);
+      io.emit("message", message);
     });
 
     socket.on("disconnect", () => {
-      console.log("user disconnected");
+      console.log("System Log: user disconnected");
     });
+
+    socket.on("systemLog", (message) => {
+        console.log(`System Log: ${message}`);
+      });
+
   } catch (error) {
     return console.error(error);
   }
