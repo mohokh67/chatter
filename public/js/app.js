@@ -5,26 +5,26 @@ $(() => {
 });
 
 $("form").submit(() => {
-  var $senderMessage = $("#message");
-  var $sender = $("#sender");
-  var message = {
-    name: $sender.val(),
-    message: $senderMessage.val(),
-    room_id: "1"
-  };
-  socket.emit('message', message);
-  $senderMessage.val('');
-  $sender.hide();
-  return false;
+    var $senderMessage = $("#message");
+    var $sender = $("#sender");
+    var message = {
+        name: $sender.val(),
+        message: $senderMessage.val(),
+        room_id: "1"
+    };
+    socket.emit('message', message); // Emiting to server
+    $senderMessage.val('');
+    $sender.hide();
+    return false;
 });
 
-socket.on('message', (message) => {
+socket.on('updateClients', (message) => {
     addMessage(message);
 });
 
 socket.on('connect', () => {
   //emiting to everyone
-  socket.emit('systemLog', "A new user connected");
+  socket.emit('systemLog', "A new user connected"); // Emiting to server
 });
 
 function getMessages() {

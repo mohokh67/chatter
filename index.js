@@ -51,10 +51,12 @@ tech.on("connection", (socket) => {
   
     try {
     socket.on("message", async (message) => {
-      var thisMessage = new Message(message);
-      var sevedMessage = await thisMessage.save();
-      console.log("Messaged saved to DB");
-      tech.emit("message", message);
+        // Step 1: Add to DB
+        var thisMessage = new Message(message);
+        var sevedMessage = await thisMessage.save();
+        console.log("Messaged saved to DB");
+        // Step 2: Update client(s)
+        tech.emit("updateClients", message); // Emiting to client
     });
 
     socket.on("disconnect", () => {
