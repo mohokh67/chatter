@@ -1,12 +1,18 @@
-const app = require("express")();
+//const app = require("express")();
 const express = require("express");
+const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 const dbURL = "mongodb://root:Password@ds012178.mlab.com:12178/chatter";
-const port = 2002;
+let port = 2002;
+
+// Set the port in run time or use the default one which is in port variable in above line
+// Run the code with a different port from console like this: "PORT=3000 node ./index.js"
+app.set('port', process.env.PORT || port);
+port = app.get('port');
 
 app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.json()); // Parse the body from get request
@@ -41,36 +47,17 @@ server.listen(port, () => {
 // var thisRoom = new ChatRoom({name: 'Vue.js', extra: "It couldn't be easir with Vue"});
 // var sevedMessage = thisRoom.save(); 
 
-app.get("/", (req, res) => {
-  //res.sendFile(__dirname + '/public/index.html');
-});
+// Set variables fro routes
+app.set('ChatRoom', ChatRoom);
+app.set('Message', Message);
+app.set('io', io);
 
-// All messages
-app.get("/messages", (req, res) => {
-  Message.find({}, (error, messages) => {
-    res.send(messages);
-  });
-});
+// Routes
+app.use(require('./routes/index'));
+app.use(require('./routes/messages'));
+app.use(require('./routes/rooms'));
 
-// All messages belong to a room
-app.get("/messages/:roomName", async (req, res) => {
-    let roomName = await req.params.roomName;
-    let chatRoom = await ChatRoom.findOne({name: roomName});
-    io.emit('send_room_id', chatRoom._id);
-    console.log('we are here');
-    Message.find({room_id: chatRoom._id}, (error, messages) => {
-      res.send(messages);
-      //res.sendFile(__dirname + '/public/messages.html');
-      //app.use(express.static(__dirname + "/public/"));
-    });
-  });
 
-  // All rooms
-  app.get("/rooms", (req, res) => {
-    ChatRoom.find({}, (error, rooms) => {
-      res.send(rooms);
-    });
-  });
 
 // tech namespace
 const tech = io.of("/tech");
