@@ -54,7 +54,12 @@ app.set('io', io);
 
 // Routes
 app.use(require('./routes/index'));
-app.use(require('./routes/messages'));
+
+//app.use(require('./routes/messages'));
+// Prefix this route with /messages/*
+let messages = require('./routes/messages');
+app.use('/messages', messages);
+
 app.use(require('./routes/rooms'));
 
 

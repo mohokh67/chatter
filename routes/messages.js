@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // All messages
-router.get("/messages", (req, res) => {
+router.get("/", (req, res) => {
     let Message = req.app.get('Message');
 
     Message.find({}, (error, messages) => {
@@ -11,7 +11,7 @@ router.get("/messages", (req, res) => {
 });
 
 // All messages belong to a room
-router.get("/messages/:roomName", async (req, res) => {
+router.get("/:roomName", async (req, res) => {
     let Message = req.app.get('Message');
     let ChatRoom = req.app.get('ChatRoom');
     let io = req.app.get('io');
