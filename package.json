@@ -2,9 +2,9 @@
   "name": "node.test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
-    "start": "nodemon ./index.js --exec babel-node -e js",
+    "start": "nodemon ./app/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
     "express": "^4.16.2",
     "mongoose": "^5.0.6",
     "nodemon": "^1.15.0",
+    "reload": "^2.2.2",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {

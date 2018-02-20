@@ -14,7 +14,7 @@ let port = 2002;
 app.set('port', process.env.PORT || port);
 port = app.get('port');
 
-app.use(express.static(__dirname + "/public/"));
+app.use(express.static(__dirname + "/app/public/"));
 app.use(bodyParser.json()); // Parse the body from get request
 app.use(bodyParser.urlencoded({ extended: false })); // Parse the body of post request from jQuery
 
@@ -54,13 +54,13 @@ app.set('io', io);
 
 // Routes
 app.use(require('./routes/index'));
-
+app.use(require('./routes/rooms'));
 //app.use(require('./routes/messages'));
 // Prefix this route with /messages/*
 let messages = require('./routes/messages');
 app.use('/messages', messages);
 
-app.use(require('./routes/rooms'));
+
 
 
 
