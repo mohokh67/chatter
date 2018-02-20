@@ -1,10 +1,12 @@
 //const app = require("express")();
 const express = require("express");
 const app = express();
+const reload = require("reload");
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+
 
 const dbURL = "mongodb://root:Password@ds012178.mlab.com:12178/chatter";
 let port = 2002;
@@ -14,7 +16,7 @@ let port = 2002;
 app.set('port', process.env.PORT || port);
 port = app.get('port');
 
-app.use(express.static(__dirname + "/app/public/"));
+app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.json()); // Parse the body from get request
 app.use(bodyParser.urlencoded({ extended: false })); // Parse the body of post request from jQuery
 
@@ -97,3 +99,5 @@ tech.on("connection", socket => {
     return console.error(error);
   }
 });
+
+reload(app);
