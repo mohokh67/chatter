@@ -7,7 +7,6 @@ const io = require("socket.io")(server);
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
-
 const dbURL = "mongodb://root:Password@ds012178.mlab.com:12178/chatter";
 let port = 2002;
 
@@ -15,6 +14,8 @@ let port = 2002;
 // Run the code with a different port from console like this: "PORT=3000 node ./index.js"
 app.set('port', process.env.PORT || port);
 port = app.get('port');
+app.set('view engine', 'ejs');
+app.set('views', 'app/views');
 
 app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.json()); // Parse the body from get request
@@ -23,13 +24,13 @@ app.use(bodyParser.urlencoded({ extended: false })); // Parse the body of post r
 mongoose.Promise = Promise; // Use the ES6 promise for mongoose promise
 
 // DB Model
-var Message = mongoose.model("Message", {
+let Message = mongoose.model("Message", {
   room_id: String,
   name: String,
   message: String
 });
 
-var ChatRoom = mongoose.model("ChatRoom", {
+let ChatRoom = mongoose.model("ChatRoom", {
   name: { type : String , unique : true, required : true, dropDups: true },
   extra: String
 });
@@ -39,6 +40,7 @@ mongoose.connect(dbURL, error => {
   console.log("DB error", error);
 });
 
+//use reload - reload broswer for every change
 reload(app);
 
 server.listen(port, () => {

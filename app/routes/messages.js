@@ -3,11 +3,13 @@ const router = express.Router();
 
 // All messages
 router.get("/", (req, res) => {
-    let Message = req.app.get('Message');
+    // let Message = req.app.get('Message');
 
-    Message.find({}, (error, messages) => {
-        res.send(messages);
-    });
+    // Message.find({}, (error, messages) => {
+    //     res.send(messages);
+    // });
+
+    res.render('messenger');
 });
 
 // All messages belong to a room
