@@ -17,6 +17,9 @@ port = app.get('port');
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');
 
+// siteTitle will be available in all views
+app.locals.siteTitle = 'Chatter';
+
 app.use(express.static(__dirname + "/public/"));
 app.use(bodyParser.json()); // Parse the body from get request
 app.use(bodyParser.urlencoded({ extended: false })); // Parse the body of post request from jQuery

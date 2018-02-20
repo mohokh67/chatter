@@ -9,7 +9,9 @@ router.get("/", (req, res) => {
     //     res.send(messages);
     // });
 
-    res.render('messenger');
+    res.render('messenger', {
+        pageTitle: 'Messages'
+    });
 });
 
 // All messages belong to a room
