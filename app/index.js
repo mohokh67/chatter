@@ -38,6 +38,9 @@ var ChatRoom = mongoose.model("ChatRoom", {
 mongoose.connect(dbURL, error => {
   console.log("DB error", error);
 });
+
+reload(app);
+
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -100,4 +103,3 @@ tech.on("connection", socket => {
   }
 });
 
-reload(app);
