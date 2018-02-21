@@ -1,7 +1,7 @@
 const socket = io('/tech');
 
 $(() => {
-    getMessages();
+    //getMessages();
     //getChatRoms();
 });
 
@@ -22,7 +22,7 @@ $("form").submit(() => {
 
 socket.on('send_room_id', (roomID) => {
     log(roomID)
-    let roomID = roomID;
+    //let roomID = roomID;
 })
 
 socket.on('updateClients', (message) => {

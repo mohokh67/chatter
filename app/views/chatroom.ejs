@@ -1,47 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Let's chat again</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-     <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/app.css" />
-   
+    <% include partials/templates/head.ejs %>
 </head>
 <body>
-    
-    chat rooms
         <div class="siteContainer">
         <header>
-                <h2 class="display-5">Recent Messages:</h2>
+                <h2 class="display-5"><%= pageHeader %></h2>
         </header>
         <main>
-            <ul id="messages"></ul>
+            <ul id="messages">
+                <% if(rooms.length) { %>
+                    <% rooms.forEach(function(room) { 
+                            var link = 'http://localhost:2002/messages/' + room.name;
+                        %>
+                        <li>
+                            <strong><a href="<%= link %>"><%= room.name %></a></strong>
+                            <span class="small"><%= room.extra %></span>
+                        </li>
+                      <%  }); %>
+                <% } %>
+            </ul>
         </main>
-        <footer>
-        
-           
-                <form>
-                    <div class="input-group mb-3">
-                            <input id='sender' placeholder="name" autocomplete="off" class="form-control col-sm-2  col-xs-2">
-                            <input type="text" id="message" autocomplete="off" class="form-control" placeholder="Message..." aria-label="Message...">
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">Send</button>
-                            </div>
-                    </div>
-                </form>
-          
-           
-    </footer>
-</div>
-     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/reload/reload.js"></script>
-    <script src="js/app.js"></script>
+    </div>
+    <% include partials/templates/footerScripts.ejs %>
+    <script src="js/chatroom.js"></script>
 </body>
 </html>

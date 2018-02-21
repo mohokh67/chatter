@@ -50,13 +50,6 @@ server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// var thisRoom = new ChatRoom({name: 'React', extra: 'React will be the next one'});
-// var sevedMessage = thisRoom.save();
-// var thisRoom = new ChatRoom({name: 'Node.js', extra: "Let's talk about Node.js here"});
-// var sevedMessage = thisRoom.save();
-// var thisRoom = new ChatRoom({name: 'Vue.js', extra: "It couldn't be easir with Vue"});
-// var sevedMessage = thisRoom.save(); 
-
 // Set variables fro routes
 app.set('ChatRoom', ChatRoom);
 app.set('Message', Message);
@@ -69,10 +62,6 @@ app.use(require('./routes/rooms'));
 // Prefix this route with /messages/*
 let messages = require('./routes/messages');
 app.use('/messages', messages);
-
-
-
-
 
 // tech namespace
 const tech = io.of("/tech");
