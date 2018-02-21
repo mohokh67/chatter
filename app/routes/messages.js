@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// All messages
+// All messages - Not being used 
 router.get("/", (req, res) => {
     let Message = req.app.get('Message');
 
