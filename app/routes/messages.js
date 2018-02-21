@@ -4,7 +4,7 @@ const router = express.Router();
 // All messages
 router.get("/", (req, res) => {
     let Message = req.app.get('Message');
-    
+
     Message.find({}, (error, messages) => {
         res.send(messages);
      });
@@ -19,13 +19,14 @@ router.get("/:roomName", async (req, res) => {
     let roomName = await req.params.roomName;
     let chatRoom = await ChatRoom.findOne({ name: roomName });
     let roomID = chatRoom._id;
+    //let roomName = chatRoom.name;
     io.emit("send_room_id", roomID);
     console.log("we are here");
     Message.find({ room_id: roomID }, (error, messages) => {
         //res.send(messages);
         res.render('messenger', {
-            pageTitle: 'Messagessss',
-            pageHeader: 'Recent Messagessss:',
+            pageTitle: `${roomName} Room`,
+            pageHeader: `Recent Messages about: ${roomName}`,
             messages: messages,
             roomID: roomID
         });
