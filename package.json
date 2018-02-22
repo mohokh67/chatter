@@ -5,6 +5,9 @@
   "main": "app/index.js",
   "scripts": {
     "start": "nodemon ./app/index.js --exec babel-node -e js,css,ejs,html --watch app",
+    "debug-mac-linux": "DEBUG=* npm run start",
+    "debug-windows": "set DEBUG=* & npm run start",
+    "debug": "npm run debug-mac-linux",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

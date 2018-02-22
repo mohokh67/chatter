@@ -62,6 +62,8 @@ app.use(require('./routes/rooms'));
 // Prefix this route with /messages/*
 let messages = require('./routes/messages');
 app.use('/messages', messages);
+let api = require('./routes/api');
+app.use('/api', api);
 
 // tech namespace
 const tech = io.of("/tech");
